@@ -28,7 +28,7 @@ const state = {
   threads: {},
   model: 'claude-opus-5-5',
   hasKey: false,
-  provider: 'plan',
+  provider: 'api',
   plan: { installed: false, loggedIn: false },
   folder: null,
   sessions: {},

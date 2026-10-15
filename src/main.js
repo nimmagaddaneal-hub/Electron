@@ -32,7 +32,8 @@ ipcMain.handle('settings:get', async () => {
     hasKey: !!getApiKey(),
     keyFromEnv: !s.apiKeyEnc && !!process.env.ANTHROPIC_API_KEY,
     model: s.model || 'claude-opus-5-5',
-    provider: s.provider || 'plan',
+    // Packaged builds default to API keys (Anthropic's terms for shared apps); plan mode stays opt-in.
+    provider: s.provider || (app.isPackaged ? 'api' : 'plan'),
     folder: s.folder || null,
     plan: await planStatus(),
   };
