@@ -2,17 +2,30 @@
 
 A modern, dark, glassy desktop browser for developers and business people, with built-in AI companions powered by Claude.
 
-## Run
+## Download
 
-```bash
-npm install
-npm start
-```
+Get the latest version from **[Releases](https://github.com/nimmagaddaneal-hub/Electron/releases/latest)**:
 
-Then open **Settings (⌘,)** and choose how companions connect:
+| Platform | File |
+|---|---|
+| Mac (Apple silicon: M1, M2, M3, M4) | `Meridian-x.y.z-arm64.dmg` |
+| Mac (Intel) | `Meridian-x.y.z-x64.dmg` |
+| Windows | `Meridian-Setup-x.y.z.exe` |
 
-- **Claude plan (default, no API key):** Meridian runs your installed Claude Code CLI (`claude -p`), so replies use your Pro or Max subscription and count toward its usage limits. Click **Sign in with Claude** once, which runs `claude auth login` and opens your browser. This works only on your own machine. If you share Meridian with other people, Anthropic's terms require it to use API keys instead.
-- **API key:** pay per use through console.anthropic.com. The key is encrypted with the macOS keychain.
+**Mac:** open the `.dmg` and drag **Meridian** into **Applications**. Meridian isn't signed with an Apple Developer ID yet, so the first launch is blocked:
+
+1. Open Meridian. When macOS blocks it, click **Done**.
+2. Go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to Meridian.
+3. Confirm. After that, Meridian opens normally.
+
+**Windows:** run the installer. If SmartScreen appears, click **More info → Run anyway**.
+
+## Set up companions
+
+Open **Settings (⌘,)** and choose how companions connect:
+
+- **API key (default):** pay per use with your own key from console.anthropic.com. The key is encrypted with your OS keychain.
+- **Claude plan (personal use):** if you have Claude Code installed, Meridian can run it (`claude -p`) so replies use your own Pro or Max subscription. Click **Sign in with Claude** once. Anthropic's terms allow this only for your own use on your own machine.
 
 **Folder access:** in Settings, choose a folder for companions to read. In plan mode they can search and read files there (Read, Glob and Grep tools only). They can't edit files, run commands, or reach anything outside that folder. The CLI runs with `--restricted --strict-mcp-config`, so your personal Claude Code hooks and plugins are not loaded.
 
@@ -38,6 +51,23 @@ Then open **Settings (⌘,)** and choose how companions connect:
 - Highlight text, right-click, and choose **Ask Companion about selection**. You can also choose **Summarize page with Companion**.
 - In the address bar, type `@sterling what's the pricing here?` or `? explain this`.
 - Pick the model in the panel: Opus 5.5 (default), Sonnet 5.5, or Haiku 5.5. Replies stream in, and you can stop them mid-reply.
+
+## Run from source
+
+```bash
+npm install
+npm start
+```
+
+## Build installers
+
+```bash
+npm run dist:mac
+```
+
+Installers are written to `dist/`. Use `npm run dist:win` for Windows.
+
+**Publish a release:** push a version tag such as `v0.1.0`. The GitHub Action in `.github/workflows/release.yml` then builds the Mac and Windows installers and attaches them to a GitHub Release. Bump `version` in `package.json` before tagging each new release.
 
 ## Files
 

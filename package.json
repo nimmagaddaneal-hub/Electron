@@ -5,13 +5,91 @@
   "description": "A modern browser for developers and business people, with built-in AI companions powered by Claude.",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "^44.7.2"
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.134.0"
+  },
+  "author": {
+    "name": "Neal Nimmagadda",
+    "email": "nimmagadda.neal@gmail.com"
+  },
+  "homepage": "https://github.com/nimmagaddaneal-hub/Electron",
+  "build": {
+    "appId": "com.meridian.browser",
+    "productName": "Meridian",
+    "copyright": "Copyright © 2026 Neal Nimmagadda",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "identity": "-",
+      "hardenedRuntime": false,
+      "artifactName": "Meridian-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "title": "Meridian ${version}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Meridian-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Network",
+      "artifactName": "Meridian-${version}.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "nimmagaddaneal-hub",
+        "repo": "Electron",
+        "releaseType": "release"
+      }
+    ]
   }
 }
