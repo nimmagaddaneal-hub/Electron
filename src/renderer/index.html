@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+  <title>Meridian</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-ws="dev">
+  <div id="app">
+    <!-- ============ Sidebar ============ -->
+    <aside id="sidebar">
+      <div class="sb-top drag">
+        <div class="brand no-drag" title="Meridian">
+          <span class="brand-mark"></span><span class="brand-name">Meridian</span>
+        </div>
+      </div>
+
+      <div class="ws-switch" id="wsSwitch">
+        <button data-ws="dev" title="Developer workspace"><span class="dot"></span>Dev</button>
+        <button data-ws="biz" title="Business workspace"><span class="dot"></span>Business</button>
+        <button data-ws="life" title="Personal workspace"><span class="dot"></span>Personal</button>
+      </div>
+
+      <button class="new-tab-btn" id="newTabBtn"><span class="plus">+</span> New tab <kbd>⌘T</kbd></button>
+
+      <div class="sb-section-label">Pinned</div>
+      <div id="pinned" class="pinned-grid"></div>
+
+      <div class="sb-section-label">Tabs <span id="tabCount"></span></div>
+      <div id="tabs" class="tab-list"></div>
+
+      <div class="sb-footer">
+        <button class="companion-chip" id="companionChip" title="Open companions (⌘J)">
+          <span class="orb" id="chipOrb"></span>
+          <span class="chip-text"><b id="chipName">Atlas</b><small id="chipRole">Engineer</small></span>
+        </button>
+        <button class="icon-btn" id="settingsBtn" title="Settings (⌘,)">
+          <svg viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ============ Main ============ -->
+    <main id="main">
+      <header id="toolbar" class="drag">
+        <div class="nav no-drag">
+          <button class="icon-btn" id="backBtn" title="Back (⌘[)"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="icon-btn" id="fwdBtn" title="Forward (⌘])"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+          <button class="icon-btn" id="reloadBtn" title="Reload (⌘R)"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
+        </div>
+
+        <div class="urlbar no-drag" id="urlbarWrap">
+          <span class="lock" id="lockIcon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+          <input id="urlInput" spellcheck="false" autocomplete="off" placeholder="Search, enter a URL, or type @ to ask a companion" />
+          <div class="url-progress" id="urlProgress"></div>
+          <button class="url-ai" id="urlAiBtn" title="Ask about this page">✦</button>
+        </div>
+
+        <div class="tools no-drag">
+          <div class="seg" id="viewportSeg" title="Responsive viewport">
+            <button data-vp="full" class="on" title="Full width"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+            <button data-vp="tablet" title="Tablet 820px"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+            <button data-vp="mobile" title="Mobile 390px"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+          </div>
+          <button class="icon-btn" id="devtoolsBtn" title="Page DevTools (⌥⌘I)"><svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></button>
+          <button class="icon-btn" id="paletteBtn" title="Command palette (⌘K)"><svg viewBox="0 0 24 24"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 0 0 0-6Z"/></svg></button>
+          <button class="ai-toggle" id="aiToggle" title="Companions (⌘J)"><span class="orb small" id="toggleOrb"></span>Companions</button>
+        </div>
+      </header>
+
+      <div id="stage">
+        <div id="viewport" class="vp-full">
+          <div id="webviews"></div>
+          <section id="newtab" class="newtab">
+            <div class="nt-glow"></div>
+            <div class="nt-inner">
+              <div class="nt-time" id="ntTime">--:--</div>
+              <div class="nt-greet" id="ntGreet">Good evening</div>
+              <form class="nt-search" id="ntSearch">
+                <span class="nt-search-icon">⌕</span>
+                <input id="ntInput" placeholder="Search the web, open a URL, or ask @atlas…" autocomplete="off" spellcheck="false" />
+                <kbd>↵</kbd>
+              </form>
+              <div class="nt-companions" id="ntCompanions"></div>
+              <div class="nt-links" id="ntLinks"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============ Companions panel ============ -->
+    <aside id="ai-panel">
+      <div class="ai-head drag">
+        <div class="ai-roster no-drag" id="roster"></div>
+        <button class="icon-btn no-drag" id="aiClose" title="Close (⌘J)"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="ai-identity" id="aiIdentity"></div>
+      <div class="ai-thread" id="thread"></div>
+      <div class="ai-quick" id="quick"></div>
+      <form class="ai-compose" id="compose">
+        <div class="ctx-row">
+          <label class="ctx-toggle"><input type="checkbox" id="ctxPage" checked /><span></span>Read current page</label>
+          <select id="modelSel" title="Model">
+            <option value="claude-opus-5-5">Opus 5.5</option>
+            <option value="claude-sonnet-5-5">Sonnet 5.5</option>
+            <option value="claude-haiku-5-5">Haiku 5.5</option>
+          </select>
+          <button type="button" class="link-btn" id="clearChat">Clear</button>
+        </div>
+        <div class="compose-box">
+          <textarea id="prompt" rows="1" placeholder="Message Atlas…"></textarea>
+          <button type="submit" class="send" id="sendBtn" title="Send (↵)"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </form>
+    </aside>
+  </div>
+
+  <!-- Command palette -->
+  <div class="modal" id="palette" hidden>
+    <div class="palette">
+      <input id="paletteInput" placeholder="Type a command, tab, or ask a companion…" autocomplete="off" spellcheck="false" />
+      <div id="paletteList" class="palette-list"></div>
+      <div class="palette-foot"><span><kbd>↑↓</kbd> navigate</span><span><kbd>↵</kbd> run</span><span><kbd>esc</kbd> close</span></div>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="modal" id="settings" hidden>
+    <div class="sheet">
+      <h2>Settings</h2>
+      <p class="muted">Choose how your companions connect to Claude.</p>
+
+      <div class="provider-seg" id="providerSeg">
+        <button data-p="plan"><b>Claude plan</b><small>Use your Pro / Max subscription. No API key.</small></button>
+        <button data-p="api"><b>API key</b><small>Pay per use through the Anthropic Console.</small></button>
+      </div>
+
+      <div id="planSection">
+        <div class="plan-card">
+          <span class="plan-dot" id="planDot"></span>
+          <div class="grow"><b id="planTitle">Checking…</b><small id="planSub"></small></div>
+          <button class="primary" id="planLogin" hidden>Sign in with Claude</button>
+        </div>
+        <div class="field" style="margin-top:16px">
+          <span>Folder companions can read</span>
+          <div class="folder-row">
+            <code id="folderPath">None — companions only see web pages</code>
+            <button class="ghost" id="folderPick">Choose…</button>
+            <button class="ghost" id="folderClear" hidden>Remove</button>
+          </div>
+          <small class="hint">Read-only. Companions can search and read files here, but can't edit, delete, or run anything.</small>
+        </div>
+      </div>
+
+      <div id="apiSection" hidden>
+        <label class="field">
+          <span>Anthropic API key</span>
+          <input type="password" id="keyInput" placeholder="sk-ant-…" autocomplete="off" />
+        </label>
+        <div class="key-status" id="keyStatus"></div>
+        <p class="muted small">Encrypted with your OS keychain. Get a key at console.anthropic.com.</p>
+      </div>
+
+      <div class="sheet-actions">
+        <button class="ghost" id="keyClear" hidden>Remove key</button>
+        <span class="grow"></span>
+        <button class="ghost" id="settingsClose">Close</button>
+        <button class="primary" id="keySave" hidden>Save key</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="companions.js"></script>
+  <script src="markdown.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

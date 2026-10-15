@@ -1,0 +1,17 @@
+{
+  "name": "meridian-browser",
+  "productName": "Meridian",
+  "version": "0.1.0",
+  "description": "A modern browser for developers and business people, with built-in AI companions powered by Claude.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.7.2"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.134.0"
+  }
+}
